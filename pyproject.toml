@@ -2,7 +2,7 @@
 name = "alegrosz"
 version = "0.1.0"
 description = ""
-authors = ["SlawCzech <slaw.czech@gmail.com>"]
+authors = ["Anna Gorkiewicz <an.gorkiewicz@gmail.com>"]
 license = "Beerware"
 readme = "README.md"
 
@@ -23,3 +23,28 @@ djangorestframework-stubs = "1.9.1"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 120
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.flake8]
+ignore = ['E231', 'E241']
+per-file-ignores = [
+    '__init__.py:F401',
+]
+max-line-length = 120
+count = true
