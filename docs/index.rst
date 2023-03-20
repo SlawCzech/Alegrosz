@@ -1,5 +1,5 @@
 .. Alegrosz documentation master file, created by
-   sphinx-quickstart on Wed Mar 15 21:32:16 2023.
+   sphinx-quickstart on Mon Mar 20 11:16:12 2023.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
@@ -11,7 +11,8 @@ Version: |release|
    :maxdepth: 2
    :caption: Contents:
 
-   codestyle
+   code_style
+   modules
 
 
 

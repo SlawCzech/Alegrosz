@@ -18,20 +18,18 @@ os.environ["DJANGO_SETTINGS_MODULE"] = "config.settings"
 django.setup()
 
 project = "Alegrosz"
-author = "SlawCzech"
-
+author = "Saek"
 year = datetime.now().year
 if year > 2023:
     copyright = f"2023-{year}, {author}"
 else:
     copyright = f"2023, {author}"
-
 release = mod.__version__
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = []
+extensions = ["sphinx.ext.todo", "sphinx.ext.viewcode", "sphinx.ext.autodoc"]
 
 templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
