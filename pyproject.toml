@@ -2,7 +2,7 @@
 name = "alegrosz"
 version = "0.1.0"
 description = ""
-authors = ["Anna Gorkiewicz <an.gorkiewicz@gmail.com>"]
+authors = ["Martyna Witkowska <mar.witkowska@gmail.com>"]
 license = "Beerware"
 readme = "README.md"
 
@@ -18,13 +18,18 @@ flake8 = "6.0.0"
 Sphinx = "6.1.3"
 django-stubs = "1.15.0"
 djangorestframework-stubs = "1.9.1"
+pre-commit = "3.1.1"
 renku-sphinx-theme = "0.2.1"
 sphinx-rtd-theme = "1.2.0"
+pillow = "9.4.0"
+pytest-faker = "2.0.0"
+faker-commerce = "1.0.3"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
 
 [tool.black]
 line-length = 120
@@ -44,13 +49,20 @@ exclude = '''
 '''
 
 [tool.flake8]
-<<<<<<< HEAD
-ignore = ['E231', 'E241']
-=======
 ignore = ['E231', 'E241', 'F401']
->>>>>>> A-001_config
 per-file-ignores = [
     '__init__.py:F401',
 ]
 max-line-length = 120
 count = true
+
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings"
+python_files = "test_*.py"
+
+[tool.pytest.markers]
+slow = "Run slow unit test e.g. for models"
+unit = "Run unit tests"
+smoke = "Run core unit tests"
+dbtest = "Run database tests"
