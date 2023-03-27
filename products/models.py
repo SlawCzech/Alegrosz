@@ -18,8 +18,8 @@ class Product(TimeStampModel):
     image = models.ImageField(upload_to="products")
     stock_count = models.PositiveIntegerField()
     slug = models.SlugField(blank=True, max_length=50, unique=True)
-    popularity = models.PositiveIntegerField(default=0, help_text='Incremented when user views details page.')
-    rank = models.FloatField(default=0, help_text='Ranked by users.')
+    popularity = models.PositiveIntegerField(default=0, help_text="Incremented when user views details page.")
+    rank = models.FloatField(default=0, help_text="Ranked by users.")
     sales_count = models.PositiveIntegerField(default=0)
     barcode = models.CharField(max_length=13, unique=True)
 

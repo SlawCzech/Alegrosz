@@ -4,4 +4,5 @@ from django.db import models
 
 class CustomUser(AbstractUser):
     """Custom user placeholder."""
+
     pass
