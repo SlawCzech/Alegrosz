@@ -5,14 +5,23 @@ from rest_framework.viewsets import ModelViewSet
 
 from . import models
 from . import serializers
+from .paginators import CustomPaginator
 
 
 class ProductViewSet(ModelViewSet):
     queryset = models.Product.objects.all()
     serializer_class = serializers.ProductSerializer
+    pagination_class = CustomPaginator
 
     def list(self, request, *args, **kwargs):
-        pass
+        products = self.serializer_class(self.get_queryset(), many=True)
+
+        page = self.paginate_queryset(self.get_queryset())
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        return Response(data=products.data, status=status.HTTP_200_OK)
 
     def retrieve(self, request, *args, pk=None, **kwargs):
         product = get_object_or_404(queryset=self.get_queryset(), pk=pk)

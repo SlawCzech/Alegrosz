@@ -35,3 +35,10 @@ def product_db(product, db):
     """
     product.save()
     return product
+
+
+@pytest.fixture
+def api_rf():
+    from rest_framework.test import APIRequestFactory
+    return APIRequestFactory()
+
