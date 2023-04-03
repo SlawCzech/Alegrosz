@@ -50,7 +50,7 @@ class ProductFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = 'products.Product'
 
-    name = factory.Faker('sentence', locale="de_DE")
+    name = factory.Sequence(lambda n: f"{factory.Faker('sentence', nb_words=3)} {n}")
     description = factory.Faker('paragraph')
     price = factory.Faker('pydecimal', left_digits=2, right_digits=2, positive=True, min_value=10, max_value=34)
     image = factory.Faker("image_url")

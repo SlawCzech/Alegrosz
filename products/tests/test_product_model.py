@@ -1,5 +1,6 @@
 import faker_commerce
 import pytest
+from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 
 from conftest import fake
@@ -23,7 +24,6 @@ def test_custom_slug(product_onion, db):
     assert product_db.slug == "test-custom-slug"
 
 
-@pytest.mark.skip(reason="WIP")
 def test_custom_invalid_slug(db):
     name = fake.ecommerce_name()
     product = Product(
@@ -35,12 +35,15 @@ def test_custom_invalid_slug(db):
         barcode=fake.ean(length=13),
         slug="test&custom-slug",
     )
-    assert product.slug == "test-custom-slug"
+
+    with pytest.raises(ValidationError) as excinfo:
+        product.save()
+    assert "Enter a valid “slug” consisting of letters, numbers, underscores or hyphens." in excinfo.value.messages
 
 
 def test_slug_uniqueness(product_db, db):
     name = product_db.name
-    with pytest.raises(IntegrityError) as excinfo:
+    with pytest.raises(ValidationError) as excinfo:
         Product.objects.create(
             name=name,
             description=fake.sentence(),
@@ -49,4 +52,4 @@ def test_slug_uniqueness(product_db, db):
             stock_count=fake.unique.random_int(min=1, max=100),
             barcode=fake.ean(length=13),
         )
-        assert "UNIQUE constraint failed: products_product.slug" in str(excinfo.value)
+    assert "Product with this Slug already exists." in excinfo.value.messages

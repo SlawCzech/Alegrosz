@@ -29,4 +29,5 @@ class Product(TimeStampModel):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
+        self.full_clean()
         super().save(*args, **kwargs)
