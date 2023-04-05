@@ -31,3 +31,32 @@ class Product(TimeStampModel):
             self.slug = slugify(self.name)
         self.full_clean()
         super().save(*args, **kwargs)
+
+
+class CategoryProduct(models.Model):
+    product_id = models.ForeignKey("Product", on_delete=models.CASCADE)
+    category_id = models.ForeignKey("Category", on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=40, unique=True)
+    products = models.ManyToManyField("Product", related_name="categories", through="CategoryProduct")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Categories"
+
+
+class Subcategory(models.Model):
+    name = models.CharField(max_length=40)
+    category = models.ForeignKey("Category", on_delete=models.CASCADE, related_name="subcategories")
+    products = models.ManyToManyField("Product", related_name="subcategories")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Subcategories"
