@@ -12,4 +12,7 @@ def test_serializer_all_fields(product_db):
         "popularity",
         "rank",
         "barcode",
+        "categories",
+        "subcategories",
+        "stock_count"
     )

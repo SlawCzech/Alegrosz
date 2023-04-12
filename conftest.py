@@ -1,6 +1,7 @@
 import factory
 import faker_commerce
 import pytest
+from django.contrib.auth import get_user_model
 from faker import Faker
 from pytest_factoryboy import register
 
@@ -11,7 +12,16 @@ fake.add_provider(faker_commerce.Provider)
 
 
 @pytest.fixture
-def product_onion():
+def user_db(db, django_user_model):
+    return django_user_model.objects.create_user(
+        username='testUser',
+        password='password1234',
+        email='test@test.pl',
+    )
+
+
+@pytest.fixture
+def product_onion(user_db):
     """Fixture for creating Product without saving to database.
     :return: Product class object representing database row.
     :rtype: Product
@@ -24,6 +34,7 @@ def product_onion():
         image=fake.file_name(category="image", extension="png"),
         stock_count=fake.unique.random_int(min=1, max=100),
         barcode=fake.ean(length=13),
+        owner=user_db
     )
 
 
@@ -46,17 +57,27 @@ def api_rf():
     return APIRequestFactory()
 
 
+class UserFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = get_user_model()
+
+    username = factory.Sequence(lambda n: f"{factory.Faker('sentence', nb_words=3)} {n}")
+    password = factory.Faker('word')
+    email = factory.Faker('email')
+
+
 @register
 class ProductFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = "products.Product"
+        model = 'products.Product'
 
     name = factory.Sequence(lambda n: f"{factory.Faker('sentence', nb_words=3)} {n}")
-    description = factory.Faker("paragraph")
-    price = factory.Faker("pydecimal", left_digits=2, right_digits=2, positive=True, min_value=10, max_value=34)
+    description = factory.Faker('paragraph')
+    price = factory.Faker('pydecimal', left_digits=2, right_digits=2, positive=True, min_value=10, max_value=34)
     image = factory.Faker("image_url")
     stock_count = factory.Faker("pyint", min_value=1, max_value=50)
-    barcode = factory.Faker("ean13")
+    barcode = factory.Faker('ean13')
+    owner = factory.SubFactory(UserFactory)
 
 
 @pytest.fixture
