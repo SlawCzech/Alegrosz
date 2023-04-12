@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.core.validators import validate_slug
 from django.db import models
 from django.utils.text import slugify
@@ -22,6 +23,7 @@ class Product(TimeStampModel):
     rank = models.FloatField(default=0, help_text="Ranked by users.")
     sales_count = models.PositiveIntegerField(default=0)
     barcode = models.CharField(max_length=13, unique=True)
+    owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name="products")
 
     def __str__(self):
         return self.name
