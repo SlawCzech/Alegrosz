@@ -28,7 +28,12 @@ class ProductViewSet(ModelViewSet):
         return Response(data=self.serializer_class(product).data, status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs):
-        pass
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
     def update(self, request, *args, pk=None, **kwargs):
         pass
