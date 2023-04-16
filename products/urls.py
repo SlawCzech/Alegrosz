@@ -14,7 +14,7 @@ urlpatterns = [
     path("categories/<int:pk>/", views.CategoryRetrieveView.as_view(), name="category"),
     path(
         "categories/<int:pk>/subcategories/",
-        views.SubcategoryWithSubcategoriesRetrieveView.as_view(),
+        views.CategoryWithSubcategoriesRetrieveView.as_view(),
         name="category_subcategories",
     ),
     *router.urls,

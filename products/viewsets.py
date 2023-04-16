@@ -58,7 +58,7 @@ class ProductViewSet(ModelViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     def get_permissions(self):
-        if self.action in ["destroy"]:
+        if self.action == ["destroy"]:
             permission_classes = [IsAuthor]
         elif self.action == 'partial_update':
             permission_classes = [IsStaff]

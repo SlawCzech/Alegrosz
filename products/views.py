@@ -19,7 +19,7 @@ class CategoryRetrieveView(generics.RetrieveAPIView):
     permission_classes = (IsAuthenticated,)
 
 
-class SubcategoryWithSubcategoriesRetrieveView(generics.RetrieveAPIView):
+class CategoryWithSubcategoriesRetrieveView(generics.RetrieveAPIView):
     serializer_class = CategoryWithSubcategoriesSerializer
     queryset = Category.objects.all()
     permission_classes = (IsAuthenticated,)
