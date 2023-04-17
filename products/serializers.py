@@ -44,6 +44,7 @@ class CategoryWithoutProductsSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     categories = CategoryWithoutProductsSerializer(many=True)
     subcategories = SubcategorySerializer(many=True)
+    owner = serializers.ReadOnlyField(source='owner.username')
 
     class Meta:
         model = Product
@@ -59,7 +60,8 @@ class ProductSerializer(serializers.ModelSerializer):
             "categories",
             "subcategories",
             "stock_count",
-            "description"
+            "description",
+            "owner"
         )  # to jest określone w modelach!!!
 
     def save(self, **kwargs):
@@ -69,6 +71,15 @@ class ProductSerializer(serializers.ModelSerializer):
         return super().save(**kwargs)
 
 
+class AddProductWithoutCategorySubcategory(serializers.ModelSerializer):
+    owner = HiddenField(default=CurrentUserDefault())
+
+    class Meta:
+        model = Product
+        fields = ("id", "name", "price", "popularity", "rank", "barcode",
+                  "stock_count", "description", "image", "owner")
+
+
 class AddProductWithCategoriesAndSubcategoriesSerializer(serializers.ModelSerializer):
     categories = CategoryProductSerializer(source="categoryproduct_set", read_only=True, many=True)
     owner = HiddenField(default=CurrentUserDefault())
@@ -76,7 +87,7 @@ class AddProductWithCategoriesAndSubcategoriesSerializer(serializers.ModelSerial
     class Meta:
         model = Product
         fields = ("id", "name", "price", "popularity", "rank", "barcode", "categories",
-                  "stock_count", "description", "image")
+                  "stock_count", "description", "image", "owner")
 
     @transaction.atomic
     def create(self, validated_data):

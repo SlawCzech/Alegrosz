@@ -2,8 +2,12 @@ import factory
 import faker_commerce
 import pytest
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Permission
+from django.urls import reverse
 from faker import Faker
 from pytest_factoryboy import register
+from rest_framework_simplejwt.tokens import AccessToken
+from rest_framework.test import APIClient
 
 from products.models import Product, Category
 
@@ -86,5 +90,37 @@ def products_batch(db):
 
 
 @pytest.fixture
+def one_product():
+    return ProductFactory.create_batch(1)
+
+
+@pytest.fixture
 def category_db(db):
     return Category.objects.create(name="Potato")
+
+
+@pytest.fixture
+def auth_token(db, django_user_model):
+    user = django_user_model.objects.create_user(username='testuser', password='testpass')
+    client = APIClient()
+    response = client.post(reverse('token_obtain_pair'), {'username': 'testuser', 'password': 'testpass'},
+                           format='json')
+    token = response.data['access']
+    return token
+
+
+@pytest.fixture
+def user_with_token_and_add_permission(db, django_user_model):
+    user = django_user_model.objects.create_user(username='testuser2', password='testpass')
+    user.user_permissions.add(Permission.objects.get(codename='add_product'))
+    client = APIClient()
+    response = client.post(reverse('token_obtain_pair'), {'username': 'testuser2', 'password': 'testpass'},
+                           format='json')
+    token = response.data['access']
+    return token
+
+
+@pytest.fixture
+def staff_user(db, django_user_model):
+    return django_user_model.objects.create_user(username='staffuser', password='testpass', is_staff=True)
+

@@ -14,5 +14,6 @@ def test_serializer_all_fields(product_db):
         "barcode",
         "categories",
         "subcategories",
-        "stock_count"
+        "stock_count",
+        "owner"
     )

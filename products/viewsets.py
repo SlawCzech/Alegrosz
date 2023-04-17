@@ -16,7 +16,8 @@ class ProductViewSet(ModelViewSet):
     serializer_class = serializers.ProductSerializer
     parser_classes = [parsers.MultiPartParser, parsers.JSONParser]
     pagination_class = CustomPaginator
-    permission_classes = [AllowAny, IsStaff, IsAuthor]
+    permission_classes = [AllowAny, IsStaff, IsAuthor, IsAuthenticated, HasAddProductPermission]
+    # permission_classes = [IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
         products = self.serializer_class(self.get_queryset(), many=True)
@@ -33,7 +34,8 @@ class ProductViewSet(ModelViewSet):
         return Response(data=self.serializer_class(product).data, status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs):
-        serializer = serializers.AddProductWithCategoriesAndSubcategoriesSerializer(data=request.data)
+        serializer = serializers.AddProductWithCategoriesAndSubcategoriesSerializer(data=request.data,
+                                                                                    context={'request': request})
         serializer.is_valid(raise_exception=True)
         product = serializer.create({**serializer.validated_data, "owner": request.user})
 
@@ -58,7 +60,7 @@ class ProductViewSet(ModelViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     def get_permissions(self):
-        if self.action == ["destroy"]:
+        if self.action == "destroy":
             permission_classes = [IsAuthor]
         elif self.action == 'partial_update':
             permission_classes = [IsStaff]
