@@ -1,1 +1,59 @@
-[{"model": "products.product", "pk": 1, "fields": {"created_at": "2023-03-23T21:10:25.876Z", "updated_at": "2023-03-23T21:10:25.876Z", "name": "Swedish onion", "description": "Elo", "price": "12.00", "image": "products/quiz_db_er_diagram.png", "stock_count": 2, "slug": "swedish-onion", "popularity": 1, "rank": 1.0, "sales_count": 1, "barcode": "1234567896325"}}, {"model": "products.product", "pk": 2, "fields": {"created_at": "2023-03-23T21:10:56.751Z", "updated_at": "2023-03-23T21:10:56.751Z", "name": "Polish onion", "description": "hej", "price": "34.00", "image": "products/quiz_db_er_diagram_U28qKtf.png", "stock_count": 12, "slug": "polish-onion", "popularity": 12, "rank": 2.0, "sales_count": 4, "barcode": "1236549874589"}}, {"model": "products.product", "pk": 3, "fields": {"created_at": "2023-03-27T17:12:38.820Z", "updated_at": "2023-03-27T17:12:38.820Z", "name": "Marchew", "description": "Pomaranczowa", "price": "13.00", "image": "products/quiz_db_er_diagram_qaGxGGH.png", "stock_count": 3, "slug": "marchew", "popularity": 54, "rank": 40.0, "sales_count": 4, "barcode": "1258965478962"}}]
+[
+  {
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+      "created_at": "2023-03-23T21:10:25.876Z",
+      "updated_at": "2023-03-23T21:10:25.876Z",
+      "name": "Swedish onion",
+      "description": "Elo",
+      "price": "12.00",
+      "image": "products/quiz_db_er_diagram.png",
+      "stock_count": 2,
+      "slug": "swedish-onion",
+      "popularity": 1,
+      "rank": 1.0,
+      "sales_count": 1,
+      "barcode": "1234567896325",
+      "owner": 1
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+      "created_at": "2023-03-23T21:10:56.751Z",
+      "updated_at": "2023-03-23T21:10:56.751Z",
+      "name": "Polish onion",
+      "description": "hej",
+      "price": "34.00",
+      "image": "products/quiz_db_er_diagram_U28qKtf.png",
+      "stock_count": 12,
+      "slug": "polish-onion",
+      "popularity": 12,
+      "rank": 2.0,
+      "sales_count": 4,
+      "barcode": "1236549874589",
+      "owner": 2
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 3,
+    "fields": {
+      "created_at": "2023-03-27T17:12:38.820Z",
+      "updated_at": "2023-03-27T17:12:38.820Z",
+      "name": "Marchew",
+      "description": "Pomaranczowa",
+      "price": "13.00",
+      "image": "products/quiz_db_er_diagram_qaGxGGH.png",
+      "stock_count": 3,
+      "slug": "marchew",
+      "popularity": 54,
+      "rank": 40.0,
+      "sales_count": 4,
+      "barcode": "1258965478962",
+      "owner": 1
+    }
+  }
+]

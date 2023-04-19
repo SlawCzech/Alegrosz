@@ -1,0 +1,78 @@
+[
+  {
+    "model": "products.product",
+    "pk": 8,
+    "fields": {
+      "created_at": "2023-04-13T11:42:24.385Z",
+      "updated_at": "2023-04-13T11:42:24.385Z",
+      "name": "miska_ryzu",
+      "description": "Featured by MM",
+      "price": "1.00",
+      "image": "products/hardt-eseje-o-polityce-pienieznej-800px_1---w-1200_WtfSKY7.jpg",
+      "stock_count": 1,
+      "slug": "miska_ryzu",
+      "popularity": 2,
+      "rank": 5.0,
+      "sales_count": 5,
+      "barcode": "456",
+      "owner": 1
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 9,
+    "fields": {
+      "created_at": "2023-04-13T11:42:57.863Z",
+      "updated_at": "2023-04-13T11:42:57.863Z",
+      "name": "potatoes",
+      "description": "nice ones",
+      "price": "89.00",
+      "image": "products/hardt-eseje-o-polityce-pienieznej-800px_1---w-1200_9sThVvM.jpg",
+      "stock_count": 6,
+      "slug": "potatoes",
+      "popularity": 5,
+      "rank": 6.0,
+      "sales_count": 78,
+      "barcode": "9456",
+      "owner": 2
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 10,
+    "fields": {
+      "created_at": "2023-04-13T11:43:24.845Z",
+      "updated_at": "2023-04-13T11:43:24.845Z",
+      "name": "tomatoes",
+      "description": "red",
+      "price": "2.00",
+      "image": "products/hardt-eseje-o-polityce-pienieznej-800px_1---w-1200_xj4RJQP.jpg",
+      "stock_count": 6,
+      "slug": "tomatoes",
+      "popularity": 9,
+      "rank": 3.0,
+      "sales_count": 3,
+      "barcode": "789",
+      "owner": 1
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 11,
+    "fields": {
+      "created_at": "2023-04-13T11:43:55.321Z",
+      "updated_at": "2023-04-13T11:43:55.321Z",
+      "name": "kalafior",
+      "description": "white",
+      "price": "7.00",
+      "image": "products/hardt-eseje-o-polityce-pienieznej-800px_1---w-1200_3Tpn777.jpg",
+      "stock_count": 1,
+      "slug": "kalafior",
+      "popularity": 2,
+      "rank": 2.0,
+      "sales_count": 8,
+      "barcode": "1235",
+      "owner": 2
+    }
+  }
+]

@@ -4,9 +4,11 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
+from django_filters import rest_framework as filters
 
 from . import models
 from . import serializers
+from .filters import ProductFilter
 from .paginators import CustomPaginator
 from .permissions import IsAuthor, IsStaff, HasAddProductPermission
 
@@ -17,15 +19,18 @@ class ProductViewSet(ModelViewSet):
     parser_classes = [parsers.MultiPartParser, parsers.JSONParser]
     pagination_class = CustomPaginator
     permission_classes = [AllowAny, IsStaff, IsAuthor, IsAuthenticated, HasAddProductPermission]
-    # permission_classes = [IsAuthenticated]
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = ProductFilter
 
     def list(self, request, *args, **kwargs):
-        products = self.serializer_class(self.get_queryset(), many=True)
+        queryset = self.filter_queryset(self.get_queryset())
 
-        page = self.paginate_queryset(self.get_queryset().order_by("-id"))
+        page = self.paginate_queryset(queryset.order_by("-id"))
         if page is not None:
             serializer = self.get_serializer(page, many=True)
             return self.get_paginated_response(serializer.data)
+
+        products = self.serializer_class(queryset, many=True)
 
         return Response(data=products.data, status=status.HTTP_200_OK)
 
