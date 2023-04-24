@@ -11,7 +11,7 @@ class IsAuthor(BasePermission):
 
     # wycina dostęp do konkretnego modelu
     def has_object_permission(self, request: Request, view: APIView, obj: Any) -> bool:
-        if request.method == 'DELETE':
+        if request.method == "DELETE":
             return obj.owner == request.user
 
         return True
@@ -25,4 +25,4 @@ class IsStaff(BasePermission):
 
 class HasAddProductPermission(BasePermission):
     def has_permission(self, request: Request, view: APIView) -> bool:
-        return request.user.has_perm('products.add_product')
+        return request.user.has_perm("products.add_product")

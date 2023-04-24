@@ -17,6 +17,5 @@ urlpatterns = [
         views.CategoryWithSubcategoriesRetrieveView.as_view(),
         name="category_subcategories",
     ),
-
     *router.urls,
 ]

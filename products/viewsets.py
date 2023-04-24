@@ -39,8 +39,9 @@ class ProductViewSet(ModelViewSet):
         return Response(data=self.serializer_class(product).data, status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs):
-        serializer = serializers.AddProductWithCategoriesAndSubcategoriesSerializer(data=request.data,
-                                                                                    context={'request': request})
+        serializer = serializers.AddProductWithCategoriesAndSubcategoriesSerializer(
+            data=request.data, context={"request": request}
+        )
         serializer.is_valid(raise_exception=True)
         product = serializer.create({**serializer.validated_data, "owner": request.user})
 
@@ -67,9 +68,9 @@ class ProductViewSet(ModelViewSet):
     def get_permissions(self):
         if self.action == "destroy":
             permission_classes = [IsAuthor]
-        elif self.action == 'partial_update':
+        elif self.action == "partial_update":
             permission_classes = [IsStaff]
-        elif self.action == 'create':
+        elif self.action == "create":
             permission_classes = [IsAuthenticated, HasAddProductPermission]
         else:
             permission_classes = [AllowAny]

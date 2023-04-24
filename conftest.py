@@ -18,9 +18,9 @@ fake.add_provider(faker_commerce.Provider)
 @pytest.fixture
 def user_db(db, django_user_model):
     return django_user_model.objects.create_user(
-        username='testUser',
-        password='password1234',
-        email='test@test.pl',
+        username="testUser",
+        password="password1234",
+        email="test@test.pl",
     )
 
 
@@ -38,7 +38,7 @@ def product_onion(user_db):
         image=fake.file_name(category="image", extension="png"),
         stock_count=fake.unique.random_int(min=1, max=100),
         barcode=fake.ean(length=13),
-        owner=user_db
+        owner=user_db,
     )
 
 
@@ -66,21 +66,21 @@ class UserFactory(factory.django.DjangoModelFactory):
         model = get_user_model()
 
     username = factory.Sequence(lambda n: f"{factory.Faker('sentence', nb_words=3)} {n}")
-    password = factory.Faker('word')
-    email = factory.Faker('email')
+    password = factory.Faker("word")
+    email = factory.Faker("email")
 
 
 @register
 class ProductFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = 'products.Product'
+        model = "products.Product"
 
     name = factory.Sequence(lambda n: f"{factory.Faker('sentence', nb_words=3)} {n}")
-    description = factory.Faker('paragraph')
-    price = factory.Faker('pydecimal', left_digits=2, right_digits=2, positive=True, min_value=10, max_value=34)
+    description = factory.Faker("paragraph")
+    price = factory.Faker("pydecimal", left_digits=2, right_digits=2, positive=True, min_value=10, max_value=34)
     image = factory.Faker("image_url")
     stock_count = factory.Faker("pyint", min_value=1, max_value=50)
-    barcode = factory.Faker('ean13')
+    barcode = factory.Faker("ean13")
     owner = factory.SubFactory(UserFactory)
 
 
@@ -101,26 +101,27 @@ def category_db(db):
 
 @pytest.fixture
 def auth_token(db, django_user_model):
-    user = django_user_model.objects.create_user(username='testuser', password='testpass')
+    user = django_user_model.objects.create_user(username="testuser", password="testpass")
     client = APIClient()
-    response = client.post(reverse('token_obtain_pair'), {'username': 'testuser', 'password': 'testpass'},
-                           format='json')
-    token = response.data['access']
+    response = client.post(
+        reverse("token_obtain_pair"), {"username": "testuser", "password": "testpass"}, format="json"
+    )
+    token = response.data["access"]
     return token
 
 
 @pytest.fixture
 def user_with_token_and_add_permission(db, django_user_model):
-    user = django_user_model.objects.create_user(username='testuser2', password='testpass')
-    user.user_permissions.add(Permission.objects.get(codename='add_product'))
+    user = django_user_model.objects.create_user(username="testuser2", password="testpass")
+    user.user_permissions.add(Permission.objects.get(codename="add_product"))
     client = APIClient()
-    response = client.post(reverse('token_obtain_pair'), {'username': 'testuser2', 'password': 'testpass'},
-                           format='json')
-    token = response.data['access']
+    response = client.post(
+        reverse("token_obtain_pair"), {"username": "testuser2", "password": "testpass"}, format="json"
+    )
+    token = response.data["access"]
     return token
 
 
 @pytest.fixture
 def staff_user(db, django_user_model):
-    return django_user_model.objects.create_user(username='staffuser', password='testpass', is_staff=True)
-
+    return django_user_model.objects.create_user(username="staffuser", password="testpass", is_staff=True)

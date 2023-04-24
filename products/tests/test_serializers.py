@@ -15,5 +15,5 @@ def test_serializer_all_fields(product_db):
         "categories",
         "subcategories",
         "stock_count",
-        "owner"
+        "owner",
     )

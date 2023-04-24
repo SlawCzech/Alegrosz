@@ -44,7 +44,7 @@ class CategoryWithoutProductsSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     categories = CategoryWithoutProductsSerializer(many=True)
     subcategories = SubcategorySerializer(many=True)
-    owner = serializers.ReadOnlyField(source='owner.username')
+    owner = serializers.ReadOnlyField(source="owner.username")
 
     class Meta:
         model = Product
@@ -61,7 +61,7 @@ class ProductSerializer(serializers.ModelSerializer):
             "subcategories",
             "stock_count",
             "description",
-            "owner"
+            "owner",
         )  # to jest określone w modelach!!!
 
     def save(self, **kwargs):
@@ -76,8 +76,18 @@ class AddProductWithoutCategorySubcategory(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ("id", "name", "price", "popularity", "rank", "barcode",
-                  "stock_count", "description", "image", "owner")
+        fields = (
+            "id",
+            "name",
+            "price",
+            "popularity",
+            "rank",
+            "barcode",
+            "stock_count",
+            "description",
+            "image",
+            "owner",
+        )
 
 
 class AddProductWithCategoriesAndSubcategoriesSerializer(serializers.ModelSerializer):
@@ -86,8 +96,19 @@ class AddProductWithCategoriesAndSubcategoriesSerializer(serializers.ModelSerial
 
     class Meta:
         model = Product
-        fields = ("id", "name", "price", "popularity", "rank", "barcode", "categories",
-                  "stock_count", "description", "image", "owner")
+        fields = (
+            "id",
+            "name",
+            "price",
+            "popularity",
+            "rank",
+            "barcode",
+            "categories",
+            "stock_count",
+            "description",
+            "image",
+            "owner",
+        )
 
     @transaction.atomic
     def create(self, validated_data):
@@ -95,7 +116,7 @@ class AddProductWithCategoriesAndSubcategoriesSerializer(serializers.ModelSerial
 
         if "categories" in self.initial_data:
             categories = self.initial_data.get("categories")
-            category_ids = [int(category_id.strip()) for category_id in categories.split(',')]
+            category_ids = [int(category_id.strip()) for category_id in categories.split(",")]
             for category_id in category_ids:
                 category = Category.objects.get(pk=category_id)
                 CategoryProduct.objects.create(category_id=category, product_id=product).save()
